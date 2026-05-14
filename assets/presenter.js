@@ -24,6 +24,8 @@
   // can share just the deck tab/window in Meet/Zoom while still seeing notes.
   let notesWindow = null;
   let notesWindowEls = null;
+  // Same keydown handler used by main and popup so shortcuts work in either.
+  let notesKeyHandler = null;
 
   // --- markdown loading -----------------------------------------------------
 
@@ -201,6 +203,7 @@
       title: w.document.getElementById("title"),
       body: w.document.getElementById("body"),
     };
+    if (notesKeyHandler) w.document.addEventListener("keydown", notesKeyHandler);
     return w;
   }
 
@@ -413,7 +416,7 @@
     timer.setSlide(currentIdx);
     setInterval(() => timer.tick(), 1000);
 
-    document.addEventListener("keydown", (e) => {
+    const handleKey = (e) => {
       const t = e.target;
       if (t && t.nodeType === 1 && t.matches && t.matches("input, textarea, [contenteditable]")) return;
       const k = e.key;
@@ -434,7 +437,10 @@
         if (helpDialog.open) helpDialog.close();
         if (overviewDialog.open) overviewDialog.close();
       }
-    });
+    };
+    document.addEventListener("keydown", handleKey);
+    notesKeyHandler = handleKey;
+    if (notesWindow && !notesWindow.closed) notesWindow.document.addEventListener("keydown", handleKey);
 
     $("#btn-notes").addEventListener("click", () => openNotesWindow(currentIdx, deck));
     $("#btn-pause").addEventListener("click", () => timer.togglePause());
