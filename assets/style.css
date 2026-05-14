@@ -142,6 +142,36 @@ html, body {
   margin-top: 0.5rem;
 }
 
+#stage table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+}
+
+#stage thead th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 2px solid var(--accent);
+  color: var(--fg);
+}
+
+#stage tbody td {
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+#stage tbody tr:last-child td { border-bottom: none; }
+
+#stage tbody tr:hover {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+
+#stage svg { display: block; }
+
 #loading {
   font-family: var(--mono);
   color: var(--fg-muted);

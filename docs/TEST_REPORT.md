@@ -76,7 +76,7 @@ The slim agency plan deliberately skips formal browser-driven UAT, but a few vis
 ## How to re-run
 
 ```bash
-cd /Users/mx/academy/github-build-using-ai/slidetime
+cd path/to/slidetime
 python3 -m http.server 8765
 open "http://localhost:8765/index.html"
 ```
