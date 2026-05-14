@@ -26,6 +26,8 @@
   let notesWindowEls = null;
   // Same keydown handler used by main and popup so shortcuts work in either.
   let notesKeyHandler = null;
+  // Click handlers for the popup's prev/pause/next buttons.
+  let notesActions = null;
 
   // --- markdown loading -----------------------------------------------------
 
@@ -181,7 +183,7 @@
       '<title>Speaker notes — slidetime</title>' +
       '<style>' +
       ':root{color-scheme:dark}' +
-      'body{margin:0;padding:1.5rem 1.75rem;background:#0a0a0a;color:#eaeaea;' +
+      'body{margin:0;padding:1.5rem 1.75rem 5rem;background:#0a0a0a;color:#eaeaea;' +
       'font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}' +
       'header{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;' +
       'color:#888;margin-bottom:.5rem}' +
@@ -189,11 +191,23 @@
       '#title{font-size:1.05rem;font-weight:600;margin:0 0 1rem;color:#fff}' +
       '#body{font-size:1.1rem;white-space:pre-wrap}' +
       '#body.empty{color:#666;font-style:italic}' +
+      '#controls{position:fixed;left:0;right:0;bottom:0;display:flex;' +
+      'justify-content:center;gap:.5rem;padding:.6rem;background:rgba(10,10,10,.92);' +
+      'border-top:1px solid #222;backdrop-filter:blur(6px)}' +
+      '#controls button{background:#1a1a1a;color:#eaeaea;border:1px solid #333;' +
+      'padding:.45rem .9rem;border-radius:4px;font:inherit;font-size:1rem;cursor:pointer;min-width:3rem}' +
+      '#controls button:hover{background:#2a2a2a;border-color:#444}' +
+      '#controls button:active{background:#333}' +
       '</style></head><body>' +
       '<header>Speaker notes</header>' +
       '<div id="counter">— / —</div>' +
       '<h1 id="title">—</h1>' +
       '<div id="body" class="empty">(no notes for this slide)</div>' +
+      '<div id="controls">' +
+      '<button id="np-prev" type="button" title="Previous slide (←)">◀</button>' +
+      '<button id="np-pause" type="button" title="Pause/resume timer (T)">⏸</button>' +
+      '<button id="np-next" type="button" title="Next slide (→)">▶</button>' +
+      '</div>' +
       '</body></html>',
     );
     w.document.close();
@@ -204,6 +218,13 @@
       body: w.document.getElementById("body"),
     };
     if (notesKeyHandler) w.document.addEventListener("keydown", notesKeyHandler);
+    const wire = (id, fn) => {
+      const btn = w.document.getElementById(id);
+      if (btn) btn.addEventListener("click", () => { if (notesActions && notesActions[fn]) notesActions[fn](); });
+    };
+    wire("np-prev", "prev");
+    wire("np-pause", "togglePause");
+    wire("np-next", "next");
     return w;
   }
 
@@ -440,6 +461,7 @@
     };
     document.addEventListener("keydown", handleKey);
     notesKeyHandler = handleKey;
+    notesActions = { next, prev, togglePause: () => timer.togglePause() };
     if (notesWindow && !notesWindow.closed) notesWindow.document.addEventListener("keydown", handleKey);
 
     $("#btn-notes").addEventListener("click", () => openNotesWindow(currentIdx, deck));
