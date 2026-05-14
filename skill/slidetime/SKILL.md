@@ -1,9 +1,9 @@
 ---
-name: present-lesson
+name: slidetime
 description: Analyze a slidetime lesson markdown file. Reports per-slide and total time budget, flags missing timing markers, flags slides without speaker notes when the section is long, and offers to open the deck via slidetime. Use when the user is preparing or reviewing a lesson markdown deck.
 ---
 
-# present-lesson
+# slidetime
 
 Helps the user prepare a `lesson.md` for delivery via `slidetime` (https://github.com/Build-Using-AI/slidetime).
 

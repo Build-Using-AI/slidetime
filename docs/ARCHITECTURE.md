@@ -22,8 +22,8 @@ slidetime/
 ├── examples/
 │   └── demo-lesson.md      tiny synthetic deck for the tool's own demo
 ├── skill/
-│   └── present-lesson/
-│       └── SKILL.md        Claude skill source — mirror to ~/.claude/skills/present-lesson/
+│   └── slidetime/
+│       └── SKILL.md        Claude skill source — mirror to ~/.claude/skills/slidetime/
 ├── docs/
 │   ├── ARCHITECTURE.md     this file
 │   ├── DESIGN.md           visual / interaction spec

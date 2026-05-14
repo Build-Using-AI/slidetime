@@ -33,7 +33,7 @@ Any change to this contract is a breaking change.
 | `assets/presenter.js` | Single-file. Public surface. |
 | `assets/style.css` | Public surface (CDN). Class names + `data-layout` values are part of the contract. |
 | `examples/demo-lesson.md` | Synthetic content only. **Never** real community lesson content — that lives in the future `buildusingai.org/decks/` repo. |
-| `skill/present-lesson/SKILL.md` | Source of the `present-lesson` Claude skill. Mirrored to `~/.claude/skills/present-lesson/SKILL.md` on the maintainer's machine. |
+| `skill/slidetime/SKILL.md` | Source of the `slidetime` Claude skill. Mirrored to `~/.claude/skills/slidetime/SKILL.md` on the maintainer's machine. |
 
 ## Versioning
 

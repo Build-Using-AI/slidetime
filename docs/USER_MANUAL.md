@@ -80,7 +80,7 @@ The hint is **stripped from the rendered heading** — the audience sees just "I
 
 ### c) No marker → 2 min default
 
-If you forget, slidetime assumes 2 minutes. The `present-lesson` Claude skill will flag this for you.
+If you forget, slidetime assumes 2 minutes. The `slidetime` Claude skill will flag this for you.
 
 ## 5. Total session time
 
@@ -191,7 +191,7 @@ You can combine them: `?src=decks/my-talk.md#5`.
 ## 13. Authoring tips
 
 - Write the headings first, with time hints, then fill in body content. The total counter on the overview grid tells you instantly whether you've over-planned.
-- Use the `present-lesson` Claude skill to scan your deck before delivering it: it flags slides using the default 2-min budget, warns when long sections have no speaker notes, and reports the math vs your `<!-- total -->`.
+- Use the `slidetime` Claude skill to scan your deck before delivering it: it flags slides using the default 2-min budget, warns when long sections have no speaker notes, and reports the math vs your `<!-- total -->`.
 - Keep slides short. The progress bar is honest — if your "intro" is 12 min and your audience is staring at the same slide, they'll notice.
 
 ## 14. Troubleshooting
