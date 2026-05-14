@@ -101,6 +101,7 @@ Pin to `@v0` for rolling 0.x, `@v0.1.0` for the exact tag.
 | `T` | pause / resume timer |
 | `R` | reset slide timer |
 | `S` | toggle speaker notes |
+| `Shift+S` | pop speaker notes into a separate window (Meet/Zoom safe — share only the deck tab/window) |
 | `O` | overview grid |
 | `?` | help dialog |
 | `Esc` | close overlay |

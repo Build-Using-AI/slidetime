@@ -22,6 +22,11 @@
   const overviewDialog = $("#overview");
   const overviewGrid = $("#overview-grid");
 
+  // Popout speaker-notes window. Kept in a separate OS window so a presenter
+  // can share just the deck tab/window in Meet/Zoom while still seeing notes.
+  let notesWindow = null;
+  let notesWindowEls = null;
+
   // --- markdown loading -----------------------------------------------------
 
   function resolveSrc() {
@@ -164,6 +169,64 @@
     return { slides, totalBudgetSec };
   }
 
+  // --- popout notes ---------------------------------------------------------
+
+  function ensureNotesWindow() {
+    if (notesWindow && !notesWindow.closed) return notesWindow;
+    const w = window.open("", "slidetime-notes", "popup,width=540,height=720");
+    if (!w) return null; // blocked
+    w.document.open();
+    w.document.write(
+      '<!doctype html><html lang="en"><head><meta charset="utf-8">' +
+      '<title>Speaker notes — slidetime</title>' +
+      '<style>' +
+      ':root{color-scheme:dark}' +
+      'body{margin:0;padding:1.5rem 1.75rem;background:#0a0a0a;color:#eaeaea;' +
+      'font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}' +
+      'header{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;' +
+      'color:#888;margin-bottom:.5rem}' +
+      '#counter{font-size:.75rem;color:#888;margin-bottom:1rem}' +
+      '#title{font-size:1.05rem;font-weight:600;margin:0 0 1rem;color:#fff}' +
+      '#body{font-size:1.1rem;white-space:pre-wrap}' +
+      '#body.empty{color:#666;font-style:italic}' +
+      '</style></head><body>' +
+      '<header>Speaker notes</header>' +
+      '<div id="counter">— / —</div>' +
+      '<h1 id="title">—</h1>' +
+      '<div id="body" class="empty">(no notes for this slide)</div>' +
+      '</body></html>',
+    );
+    w.document.close();
+    notesWindow = w;
+    notesWindowEls = {
+      counter: w.document.getElementById("counter"),
+      title: w.document.getElementById("title"),
+      body: w.document.getElementById("body"),
+    };
+    return w;
+  }
+
+  function updateNotesWindow(i, deck) {
+    if (!notesWindow || notesWindow.closed || !notesWindowEls) return;
+    const slide = deck.slides[i];
+    notesWindowEls.counter.textContent = (i + 1) + " / " + deck.slides.length;
+    notesWindowEls.title.textContent = slide.title;
+    if (slide.notes) {
+      notesWindowEls.body.textContent = slide.notes;
+      notesWindowEls.body.classList.remove("empty");
+    } else {
+      notesWindowEls.body.textContent = "(no notes for this slide)";
+      notesWindowEls.body.classList.add("empty");
+    }
+  }
+
+  function openNotesWindow(i, deck) {
+    const w = ensureNotesWindow();
+    if (!w) return;
+    updateNotesWindow(i, deck);
+    try { w.focus(); } catch (_) { /* ignore cross-window focus errors */ }
+  }
+
   // --- rendering ------------------------------------------------------------
 
   function fmt(sec) {
@@ -197,6 +260,7 @@
     slideCounterEl.textContent = (i + 1) + " / " + deck.slides.length;
     notesBody.textContent = slide.notes || "";
     notesPanel.classList.toggle("empty", !slide.notes);
+    updateNotesWindow(i, deck);
     const wantedHash = "#" + (i + 1);
     if (location.hash !== wantedHash) {
       history.replaceState(null, "", location.pathname + location.search + wantedHash);
@@ -364,7 +428,11 @@
       else if (k === "f" || k === "F") { toggleFullscreen(); }
       else if (k === "t" || k === "T") { timer.togglePause(); }
       else if (k === "r" || k === "R") { timer.resetSlide(); }
-      else if (k === "s" || k === "S") { notesPanel.hidden = !notesPanel.hidden; }
+      else if (k === "s" || k === "S") {
+        if (e.shiftKey) openNotesWindow(currentIdx, deck);
+        else notesPanel.hidden = !notesPanel.hidden;
+        e.preventDefault();
+      }
       else if (k === "o" || k === "O") {
         buildOverview(deck, currentIdx, goto);
         overviewDialog.showModal();
@@ -380,6 +448,12 @@
     $("#btn-notes").addEventListener("click", () => { notesPanel.hidden = !notesPanel.hidden; });
     $("#btn-pause").addEventListener("click", () => timer.togglePause());
     $("#btn-fullscreen").addEventListener("click", toggleFullscreen);
+    const popoutBtn = $("#btn-notes-popout");
+    if (popoutBtn) popoutBtn.addEventListener("click", () => openNotesWindow(currentIdx, deck));
+
+    window.addEventListener("beforeunload", () => {
+      if (notesWindow && !notesWindow.closed) notesWindow.close();
+    });
 
     window.addEventListener("hashchange", () => {
       const idx = parseInt(location.hash.replace(/^#/, ""), 10) - 1;
