@@ -126,7 +126,7 @@ Timers run via a single `setInterval(tick, 1000)` driven from `Date.now()` delta
 | `F` | toggle fullscreen |
 | `T` | pause / resume timer |
 | `R` | reset slide timer (current slide only) |
-| `S` | toggle speaker notes panel |
+| `S` | open speaker notes window (separate OS window — Meet/Zoom safe) |
 | `O` | overview grid |
 | `?` | help dialog |
 | `Esc` | close any open overlay |
@@ -151,7 +151,6 @@ External decks (in the future `buildusingai.org` repo) load slidetime via jsDeli
 </head>
 <body>
   <main id="stage" aria-live="polite"><div id="loading">Loading…</div></main>
-  <aside id="notes" hidden><header>Speaker notes</header><div id="notes-body"></div></aside>
   <div id="hud"></div>
   <div id="progress"><div id="progress-bar"></div></div>
   <dialog id="help"></dialog>

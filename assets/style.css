@@ -320,39 +320,6 @@ html, body {
   animation: pulse 2s ease-in-out infinite;
 }
 
-/* --- notes panel --------------------------------------------------------- */
-
-#notes {
-  position: fixed;
-  bottom: 4.5rem;
-  right: 1rem;
-  width: 360px;
-  max-height: 40vh;
-  overflow-y: auto;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  z-index: 11;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-#notes header {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--fg-muted);
-  margin-bottom: 0.5rem;
-}
-
-#notes.empty #notes-body::before {
-  content: "(no notes for this slide)";
-  color: var(--fg-muted);
-  font-style: italic;
-}
-
 /* --- dialogs ------------------------------------------------------------- */
 
 dialog {
@@ -474,13 +441,12 @@ dialog::backdrop {
 
 @media (max-width: 480px) {
   #overview-grid { grid-template-columns: 1fr; }
-  #notes { left: 1rem; right: 1rem; width: auto; }
 }
 
 /* --- print --------------------------------------------------------------- */
 
 @media print {
-  #hud, #progress, #notes, dialog { display: none !important; }
+  #hud, #progress, dialog { display: none !important; }
   html, body { height: auto; overflow: visible; background: white; color: black; }
   #stage { position: static; padding: 1in; page-break-after: always; }
 }

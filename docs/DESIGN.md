@@ -138,11 +138,11 @@ Native `<dialog>` filling 90% of viewport. CSS grid, `repeat(auto-fill, minmax(2
 
 Each card: thumbnail of the slide (rendered HTML, scaled via `transform: scale(0.25)`), slide number + title underneath, time budget badge in top-right. Clicking the card calls `goto(i)` and closes the dialog. Current slide gets a 2px `--accent` ring.
 
-## Speaker notes panel
+## Speaker notes window
 
-`<aside id="notes">` slides up from the bottom-right when toggled. 360px wide, max 40vh tall, scrollable. `--bg-elev` background, 1px `--border`. Shows the slide title at top and rendered notes (plain text) below.
+`S` (or the `notes` button) opens a separate OS window via `window.open(...)` containing the current slide's title and notes. The window stays in sync as the presenter navigates slides. Kept as a separate OS window — not an in-page overlay — so a presenter can share the deck tab/window in Meet or Zoom while still seeing notes; the notes window is not part of the captured surface.
 
-When closed, the panel is `hidden` (no transition for v0; can add slide animation in v0.2).
+Styling is inlined into the popup document (dark background, monospace `Speaker notes` header, larger note body) so the consumer's `style.css` doesn't have to know about it.
 
 ## Progress bar
 

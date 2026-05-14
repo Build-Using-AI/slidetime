@@ -41,9 +41,9 @@ Driven by Puppeteer against `http://localhost:8765/index.html`:
 | `→` advances slide; counter → `3 / 5`, H2 → "Writing a lesson" | ✓ |
 | URL hash syncs (`#3`) and respects existing `?query` | ✓ |
 | Code block on slide 3 contains literal `---`, `<!-- time: 3 -->`, `<!-- notes: ... -->` text | ✓ (see screenshot) |
-| `S` toggles speaker-notes panel; correct notes shown for slide 4 | ✓ |
+| `S` opens speaker-notes window; correct notes shown for slide 4; window stays in sync as slides advance | ✓ |
 | `?` opens help dialog; `O` opens overview dialog (5 cards, current marked) | ✓ |
-| `Escape` closes any open dialog / notes panel | ✓ (after fix) |
+| `Escape` closes any open dialog | ✓ (after fix) |
 
 ## Bugs found and fixed
 

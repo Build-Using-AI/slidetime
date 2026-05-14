@@ -64,7 +64,6 @@ Drop this `index.html` next to a `lesson.md`. No build, no install, just a CDN p
 </head>
 <body>
   <main id="stage" aria-live="polite"><div id="loading">Loading…</div></main>
-  <aside id="notes" hidden><header>Speaker notes</header><div id="notes-body"></div></aside>
   <div id="hud">
     <div id="hud-left"><span id="slide-counter">0 / 0</span></div>
     <div id="hud-center">
@@ -100,11 +99,33 @@ Pin to `@v0` for rolling 0.x, `@v0.1.0` for the exact tag.
 | `F` | fullscreen |
 | `T` | pause / resume timer |
 | `R` | reset slide timer |
-| `S` | toggle speaker notes |
-| `Shift+S` | pop speaker notes into a separate window (Meet/Zoom safe — share only the deck tab/window) |
+| `S` | open speaker notes window (Meet/Zoom safe — share only the deck tab/window) |
 | `O` | overview grid |
 | `?` | help dialog |
 | `Esc` | close overlay |
+
+## Claude Code skill (optional)
+
+This repo ships a [Claude Code](https://claude.com/claude-code) skill that previews your lesson timing before you present. It reads your `lesson.md`, reports per-slide and total budgets, flags missing `<!-- time -->` markers, and warns when long sections have no speaker notes.
+
+Install (one-liner — no clone needed):
+
+```bash
+mkdir -p ~/.claude/skills/slidetime && \
+  curl -fsSL https://raw.githubusercontent.com/Build-Using-AI/slidetime/main/skill/slidetime/SKILL.md \
+  -o ~/.claude/skills/slidetime/SKILL.md
+```
+
+Or, if you already have the repo cloned:
+
+```bash
+mkdir -p ~/.claude/skills/slidetime
+cp slidetime/skill/slidetime/SKILL.md ~/.claude/skills/slidetime/SKILL.md
+```
+
+Restart Claude Code. The skill auto-triggers when you reference a `lesson.md` or ask things like "check timing on my deck."
+
+Skill source: [skill/slidetime/SKILL.md](skill/slidetime/SKILL.md).
 
 ## Contributing
 

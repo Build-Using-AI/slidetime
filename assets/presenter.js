@@ -16,8 +16,6 @@
   const totalTimerEl = $("#total-timer");
   const slideCounterEl = $("#slide-counter");
   const progressBar = $("#progress-bar");
-  const notesPanel = $("#notes");
-  const notesBody = $("#notes-body");
   const helpDialog = $("#help");
   const overviewDialog = $("#overview");
   const overviewGrid = $("#overview-grid");
@@ -258,8 +256,6 @@
     stage.innerHTML = slide.bodyHtml;
     stage.dataset.layout = layoutFor(slide.bodyHtml);
     slideCounterEl.textContent = (i + 1) + " / " + deck.slides.length;
-    notesBody.textContent = slide.notes || "";
-    notesPanel.classList.toggle("empty", !slide.notes);
     updateNotesWindow(i, deck);
     const wantedHash = "#" + (i + 1);
     if (location.hash !== wantedHash) {
@@ -428,11 +424,7 @@
       else if (k === "f" || k === "F") { toggleFullscreen(); }
       else if (k === "t" || k === "T") { timer.togglePause(); }
       else if (k === "r" || k === "R") { timer.resetSlide(); }
-      else if (k === "s" || k === "S") {
-        if (e.shiftKey) openNotesWindow(currentIdx, deck);
-        else notesPanel.hidden = !notesPanel.hidden;
-        e.preventDefault();
-      }
+      else if (k === "s" || k === "S") { openNotesWindow(currentIdx, deck); e.preventDefault(); }
       else if (k === "o" || k === "O") {
         buildOverview(deck, currentIdx, goto);
         overviewDialog.showModal();
@@ -441,15 +433,12 @@
       else if (k === "Escape") {
         if (helpDialog.open) helpDialog.close();
         if (overviewDialog.open) overviewDialog.close();
-        if (!notesPanel.hidden) notesPanel.hidden = true;
       }
     });
 
-    $("#btn-notes").addEventListener("click", () => { notesPanel.hidden = !notesPanel.hidden; });
+    $("#btn-notes").addEventListener("click", () => openNotesWindow(currentIdx, deck));
     $("#btn-pause").addEventListener("click", () => timer.togglePause());
     $("#btn-fullscreen").addEventListener("click", toggleFullscreen);
-    const popoutBtn = $("#btn-notes-popout");
-    if (popoutBtn) popoutBtn.addEventListener("click", () => openNotesWindow(currentIdx, deck));
 
     window.addEventListener("beforeunload", () => {
       if (notesWindow && !notesWindow.closed) notesWindow.close();

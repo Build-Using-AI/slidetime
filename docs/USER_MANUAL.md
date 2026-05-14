@@ -34,7 +34,7 @@ A `---` **inside a fenced code block does not split** — you can use it freely 
 
 ## 3. Slide titles
 
-The first `#`, `##`, or `###` heading in a slide becomes its title. The title shows up in the overview grid and in the speaker-notes panel header.
+The first `#`, `##`, or `###` heading in a slide becomes its title. The title shows up in the overview grid and in the speaker-notes window header.
 
 ```markdown
 ## What is a token?
@@ -121,9 +121,9 @@ Body.
 > If the demo breaks, fall back to the screenshot in /assets/.
 ```
 
-Notes never appear on the slide. They only show in the speaker-notes panel, which the presenter toggles with `S`.
+Notes never appear on the slide. They only show in the speaker-notes window, which the presenter opens with `S`. The window is a separate OS window — so when you share just the deck tab/window in Meet or Zoom, attendees do **not** see the notes.
 
-When a slide has no notes, the panel still toggles open but reads "*(no notes for this slide)*".
+When a slide has no notes, the window still opens but reads "*(no notes for this slide)*".
 
 ## 7. Images
 
@@ -168,10 +168,10 @@ slidetime auto-picks a layout per slide based on what's inside. You don't pick �
 | `F` | toggle fullscreen |
 | `T` | pause / resume both timers |
 | `R` | reset the **slide** timer (does not reset total) |
-| `S` | toggle speaker notes panel |
+| `S` | open speaker notes window (separate OS window — Meet/Zoom safe) |
 | `O` | overview grid (click a card to jump) |
 | `?` | help dialog |
-| `Esc` | close any open dialog or notes panel |
+| `Esc` | close any open dialog |
 
 ## 11. URL options
 
@@ -201,6 +201,6 @@ You can combine them: `?src=decks/my-talk.md#5`.
 | "Could not load deck" card | The `src` URL returned non-2xx. | Check the URL in the browser address bar; make sure the path is reachable from the `index.html` location. |
 | "No slides found" card | The deck has no `---` separators. | Add `---` between slides. |
 | Slide title still shows "— 2 min" | The time hint isn't matching one of the supported patterns. | Use a long dash (`—`) or hyphen (`-`) followed by `N min`. Or use `<!-- time: N -->`. |
-| Speaker notes panel empty when you expected content | Notes have to be **either** a single-line `<!-- notes: ... -->` HTML comment **or** a `> Note: ...` blockquote. | Check syntax. |
+| Speaker notes window empty when you expected content | Notes have to be **either** a single-line `<!-- notes: ... -->` HTML comment **or** a `> Note: ...` blockquote. | Check syntax. |
 | Total timer is way off | You set `<!-- total: N -->` on a slide other than slide 1, where it's ignored. | Move it to the top of slide 1. |
 | Images broken | Image path is relative to your `lesson.md`, not to where slidetime is hosted. | Place images next to the markdown file or use absolute / `https://` URLs. |

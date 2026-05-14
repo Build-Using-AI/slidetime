@@ -129,9 +129,9 @@ function fmt(sec) {
 
 ## Speaker notes — 2 min
 
-<!-- notes: Press S to toggle these notes during the live demo. The audience won't see them — they're for you. Also point out the keyboard shortcut help (?) and the overview grid (O). -->
+<!-- notes: Press S to open the notes window. It's a separate OS window — when you share just the deck tab/window in Meet or Zoom, the audience does not see this. Mention the keyboard shortcut help (?) and the overview grid (O). -->
 
-Press **S** to toggle the speaker-notes panel. Two ways to write notes:
+Press **S** to open the speaker-notes window. Two ways to write notes:
 
 1. An HTML comment: `<!-- notes: your hint here -->`
 2. A blockquote: `> Note: your hint here`
